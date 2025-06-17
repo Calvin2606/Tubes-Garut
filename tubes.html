@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dodol Garut</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-image: url('https://images.unsplash.com/photo-1607083206525-5c0b08b5e001?auto=format&fit=crop&w=1400&q=80');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      color: #fff;
+    }
+
+    header {
+      background-color: rgba(0, 0, 0, 0.8);
+      padding: 15px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    nav a {
+      color: #fff;
+      margin-left: 20px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .overlay {
+      background-color: rgba(0, 0, 0, 0.65);
+      padding: 40px 20px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .card {
+      background-color: #ffffffcc;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      color: #333;
+      text-align: center;
+      transition: transform 0.2s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+    }
+
+    .card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+
+    .card-body {
+      padding: 15px;
+    }
+
+    .card-title {
+      font-size: 18px;
+      font-weight: bold;
+      color: #2e7d32;
+    }
+
+    .card-price {
+      color: #e91e63;
+      font-size: 16px;
+    }
+
+    .buy-button {
+      margin-top: 10px;
+      padding: 8px 12px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .section {
+      background: rgba(255, 255, 255, 0.9);
+      color: #000;
+      padding: 30px;
+      max-width: 600px;
+      margin: 40px auto;
+      border-radius: 10px;
+    }
+
+    .form-popup {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: white;
+      color: black;
+      padding: 30px;
+      border-radius: 10px;
+      z-index: 999;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+      width: 90%;
+      max-width: 400px;
+    }
+
+    .form-popup h3 {
+      margin-top: 0;
+      color: #2e7d32;
+    }
+
+    .form-popup input, .form-popup textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .form-popup button {
+      background: #388e3c;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .form-popup .close {
+      background: #f44336;
+      float: right;
+    }
+
+    #form-overlay {
+      position: fixed;
+      display: none;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 998;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h2>Dodol Garut</h2>
+    <nav>
+      <a href="#produk">Produk</a>
+      <a href="#harga">Harga</a>
+      <a href="#beli">Cara Beli</a>
+    </nav>
+  </header>
+
+  <div class="overlay">
+    <h1 style="text-align:center">Koleksi Dodol Garut Asli</h1>
+    <div class="grid" id="produk">
+      <div class="card">
+        <img src="original.jpeg" alt="Dodol Original">
+        <div class="card-body">
+          <div class="card-title">Dodol Garut Original</div>
+          <div class="card-price">Rp 20.000 / 500gr</div>
+          <button class="buy-button" onclick="openForm('Dodol Garut Original')">Beli Sekarang</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <img src="durian.jpeg" alt="Dodol Durian">
+        <div class="card-body">
+          <div class="card-title">Dodol Durian</div>
+          <div class="card-price">Rp 25.000 / 500gr</div>
+          <button class="buy-button" onclick="openForm('Dodol Durian')">Beli Sekarang</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <img src="coklat.jpeg" alt="Dodol Coklat">
+        <div class="card-body">
+          <div class="card-title">Dodol Coklat</div>
+          <div class="card-price">Rp 22.000 / 500gr</div>
+          <button class="buy-button" onclick="openForm('Dodol Coklat')">Beli Sekarang</button>
+        </div>
+      </div>
+
+      <!-- Tambahkan produk lain jika perlu -->
+    </div>
+  </div>
+
+  <!-- Form Pembelian -->
+  <div id="form-overlay" onclick="closeForm()"></div>
+  <div class="form-popup" id="buyForm">
+    <button class="close" onclick="closeForm()">X</button>
+    <h3>Form Pemesanan</h3>
+    <form onsubmit="submitForm(); return false;">
+      <input type="text" id="produk" name="produk" readonly />
+      <input type="text" id="nama" placeholder="Nama Lengkap" required />
+      <textarea id="alamat" placeholder="Alamat Lengkap" required></textarea>
+      <input type="number" id="jumlah" placeholder="Jumlah (pcs)" min="1" required />
+      <button type="submit">Kirim Pesanan</button>
+    </form>
+  </div>
+
+  <!-- Informasi Tambahan -->
+  <div class="section" id="harga">
+    <h2>Harga Spesial</h2>
+    <p>Beli 2 Dodol Coklat hanya Rp 42.000 (hemat Rp 2.000)<br>
+       Beli 3 Dodol Campur hanya Rp 78.000 + bonus mini dodol!</p>
+  </div>
+
+  <div class="section" id="beli">
+    <h2>Cara Membeli</h2>
+    <p>1. Klik tombol "Beli Sekarang" di produk pilihan<br>
+       2. Isi form dengan lengkap<br>
+       3. Tim kami akan menghubungi Anda via WhatsApp atau email<br>
+       4. Pesanan diproses dan dikirim ke alamat Anda</p>
+  </div>
+
+  <script>
+    function openForm(productName) {
+      document.getElementById('produk').value = productName;
+      document.getElementById('buyForm').style.display = 'block';
+      document.getElementById('form-overlay').style.display = 'block';
+    }
+
+    function closeForm() {
+      document.getElementById('buyForm').style.display = 'none';
+      document.getElementById('form-overlay').style.display = 'none';
+    }
+
+    function submitForm() {
+      const nama = document.getElementById('nama').value;
+      const alamat = document.getElementById('alamat').value;
+      const produk = document.getElementById('produk').value;
+      const jumlah = document.getElementById('jumlah').value;
+
+      alert(`Terima kasih ${nama}, pesanan ${produk} sejumlah ${jumlah} pcs akan kami proses dan kirim ke:\n${alamat}`);
+
+      // Reset dan tutup form
+      document.getElementById('buyForm').style.display = 'none';
+      document.getElementById('form-overlay').style.display = 'none';
+      document.querySelector("form").reset();
+    }
+  </script>
+
+</body>
+</html>
